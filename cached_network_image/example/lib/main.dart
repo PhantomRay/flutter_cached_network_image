@@ -110,9 +110,10 @@ class BasicContent extends StatelessWidget {
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 errorListener: (e) {
                   if (e is SocketException) {
-                    print('Error with ${e.address} and message ${e.message}');
+                    debugPrint(
+                        'Error with ${e.address} and message ${e.message}');
                   } else {
-                    print('Image Exception is: ${e.runtimeType}');
+                    debugPrint('Image Exception is: ${e.runtimeType}');
                   }
                 },
               ),
@@ -141,7 +142,7 @@ class BasicContent extends StatelessWidget {
           aspectRatio: 1.6,
           child: BlurHash(hash: 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
         ),
-        imageUrl: 'https://blurha.sh/assets/images/img1.jpg',
+        imageUrl: 'https://blurha.sh/12c2aca29ea896a628be.jpg',
         fit: BoxFit.cover,
       ),
     );

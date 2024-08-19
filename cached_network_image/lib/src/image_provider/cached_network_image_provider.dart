@@ -6,7 +6,7 @@ import 'package:cached_network_image_platform_interface/cached_network_image_pla
     show ErrorListener, ImageRenderMethodForWeb;
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart'
     if (dart.library.io) '_image_loader.dart'
-    if (dart.library.html) 'package:cached_network_image_web/cached_network_image_web.dart'
+    if (dart.library.js_interop) 'package:cached_network_image_web/cached_network_image_web.dart'
     show ImageLoader;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +33,9 @@ class CachedNetworkImageProvider
 
   /// CacheManager from which the image files are loaded.
   final BaseCacheManager? cacheManager;
+
+  /// The default cache manager used for image caching.
+  static BaseCacheManager defaultCacheManager = DefaultCacheManager();
 
   /// Web url of the image to load
   final String url;
@@ -80,13 +83,10 @@ class CachedNetworkImageProvider
       codec: _loadBufferAsync(key, chunkEvents, decode),
       chunkEvents: chunkEvents.stream,
       scale: key.scale,
-      informationCollector: () sync* {
-        yield DiagnosticsProperty<ImageProvider>(
-          'Image provider: $this \n Image key: $key',
-          this,
-          style: DiagnosticsTreeStyle.errorProperty,
-        );
-      },
+      informationCollector: () => <DiagnosticsNode>[
+        DiagnosticsProperty<ImageProvider>('Image provider', this),
+        DiagnosticsProperty<CachedNetworkImageProvider>('Image key', key),
+      ],
     );
 
     if (errorListener != null) {
@@ -134,13 +134,10 @@ class CachedNetworkImageProvider
       codec: _loadImageAsync(key, chunkEvents, decode),
       chunkEvents: chunkEvents.stream,
       scale: key.scale,
-      informationCollector: () sync* {
-        yield DiagnosticsProperty<ImageProvider>(
-          'Image provider: $this \n Image key: $key',
-          this,
-          style: DiagnosticsTreeStyle.errorProperty,
-        );
-      },
+      informationCollector: () => <DiagnosticsNode>[
+        DiagnosticsProperty<ImageProvider>('Image provider', this),
+        DiagnosticsProperty<CachedNetworkImageProvider>('Image key', key),
+      ],
     );
 
     if (errorListener != null) {
