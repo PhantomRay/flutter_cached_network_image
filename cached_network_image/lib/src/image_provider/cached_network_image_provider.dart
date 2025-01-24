@@ -203,4 +203,7 @@ class CachedNetworkImageProvider
 
     return (result as FileInfo).file.readAsBytesSync();
   }
+
+  Future<void> preload() async =>
+      (_cacheManager as ImageCacheManager).getSingleFile(url);
 }
