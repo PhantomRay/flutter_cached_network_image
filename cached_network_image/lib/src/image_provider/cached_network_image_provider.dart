@@ -205,5 +205,5 @@ class CachedNetworkImageProvider
   }
 
   Future<void> preload() async =>
-      (_cacheManager as ImageCacheManager).getSingleFile(url);
+      (_cacheManager as ImageCacheManager).getSingleFile(url,key: cacheKey ?? url);
 }
